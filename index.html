@@ -1,1 +1,43 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Random Gallery</title>
+  <style>
+    img {
+      width: 200px;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Random Gallery</h1>
+  <div id="gallery"></div>
+
+  <script>
+    // Fungsi untuk shuffle array (Fisher-Yates)
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // Fetch JSON
+    fetch('images.json')
+      .then(response => response.json())
+      .then(data => {
+        const shuffledImages = shuffleArray(data.images);
+        const gallery = document.getElementById('gallery');
+        shuffledImages.forEach(image => {
+          const img = document.createElement('img');
+          img.src = image;
+          img.alt = 'Gambar';
+          gallery.appendChild(img);
+        });
+      });
+  </script>
+</body>
+</html>
