@@ -1,13 +1,33 @@
-
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <title>Random Gallery</title>
   <style>
-    img {
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    #gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    #gallery img {
       width: 200px;
-      margin: 10px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+    #gallery img:hover {
+      transform: scale(1.05);
     }
   </style>
 </head>
@@ -16,7 +36,6 @@
   <div id="gallery"></div>
 
   <script>
-    // Fungsi untuk shuffle array (Fisher-Yates)
     function shuffleArray(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -25,7 +44,6 @@
       return array;
     }
 
-    // Fetch JSON
     fetch('images.json')
       .then(response => response.json())
       .then(data => {
@@ -33,11 +51,12 @@
         const gallery = document.getElementById('gallery');
         shuffledImages.forEach(image => {
           const img = document.createElement('img');
-          img.src = image;
+          img.src = `images/${image}`;
           img.alt = 'Gambar';
           gallery.appendChild(img);
         });
-      });
+      })
+      .catch(error => console.error('Gagal memuat gambar:', error));
   </script>
 </body>
 </html>
